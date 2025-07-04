@@ -1,0 +1,74 @@
+import java.util.Scanner;
+class Question {
+    String questionText;
+    String[] options;
+    int correctOption; 
+
+    Question(String questionText, String[] options, int correctOption) {
+        this.questionText = questionText;
+        this.options = options;
+        this.correctOption = correctOption;
+    }
+
+    void displayQuestion() {
+        System.out.println(questionText);
+        for (int i = 0; i < options.length; i++) {
+            System.out.println((i + 1) + ". " + options[i]);
+        }
+    }
+
+  
+    boolean isCorrect(int userAnswer) {
+        return userAnswer == correctOption;
+    }
+}
+
+
+public class QuizApp {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int score = 0;
+        Question[] questions = new Question[] {
+            new Question("What is the capital of India?",
+                new String[] { "Mumbai", "New Delhi", "Kolkata", "Chennai" }, 2),
+            new Question("Who is the founder of Java?",
+                new String[] { "Dennis Ritchie", "James Gosling", "Guido van Rossum", "Bjarne Stroustrup" }, 2),
+            new Question("Which keyword is used to create a subclass in Java?",
+                new String[] { "extends", "implements", "inherits", "super" }, 1),
+            new Question("Which of these is a primitive data type?",
+                new String[] { "String", "Integer", "boolean", "Scanner" }, 3),
+            new Question("What does JVM stand for?",
+                new String[] { "Java Variable Machine", "Java Virtual Machine", "Joint Virtual Module", "Java Visual Manager" }, 2)
+        };
+
+      
+        for (int i = 0; i < questions.length; i++) {
+            System.out.println("\nQuestion " + (i + 1) + ":");
+            questions[i].displayQuestion();
+            System.out.print("Your answer (1-4): ");
+            int userAnswer = sc.nextInt();
+
+            if (questions[i].isCorrect(userAnswer)) {
+                System.out.println("✅ Correct!");
+                score++;
+            } else {
+                System.out.println("❌ Wrong! Correct answer: " + questions[i].correctOption);
+            }
+        }
+
+      
+        System.out.println("\n--- Quiz Finished ---");
+        System.out.println("Your Score: " + score + " out of " + questions.length);
+
+        // Optionally show performance
+        if (score == questions.length) {
+            System.out.println("🎉 Excellent! You got all right!");
+        } else if (score >= 3) {
+            System.out.println("👍 Good job!");
+        } else {
+            System.out.println("🙁 Try again to improve!");
+        }
+
+        sc.close();
+    }
+}
